@@ -59,3 +59,37 @@ There is a variant of the import statement that imports names from a module dire
 >>> import importlib
 >>> importlib.reload(modulename).
 ```
+
+## Search Path
+
+* The directory containing the input script (or the current directory)
+* PYTHONPATH (a list of directory names, with the same syntax as the shell variable PATH).
+* The installation-dependent default.
+
+_Note: modify the sys.path to make the scripts in the targeted directory will be loaded ahead of the standard library path._
+
+## Compile Module
+
+* Python check modification and verify whether it need to be recomiple
+* Command line doesn't check cache.
+* Non-source distribution doesn't check cache.
+* .pyc dosn't run faster than .py. Just speed up during loading module.
+
+## Standard Modules
+
+* core of language
+* built into the interpreter to access operating system primitives.
+
+The variables `sys.ps1` and `sys.ps2` define the string sused as primary and secondary prompt. They are only defined if the interpreter is in  interactive mode.
+
+```python
+>>> import sys
+>>> sys.ps1
+'>>> '
+>>> sys.ps2
+'... '
+>>> sys.ps1 = 'C> '
+C> print('Yuck!')
+Yuck!
+C>
+```
