@@ -167,3 +167,42 @@ dir() doesn't list the names of built-in functions and variables. If you want to
  'sorted', 'staticmethod', 'str', 'sum', 'super', 'tuple', 'type', 'vars',
  'zip']
 ```
+
+## Packages
+
+* A way of structuring Python's module namespace.
+* When importing the package, Python searchs through the directories on `sys.path` looking for the package subdirectory.
+
+### `__init__.py`
+The `__init__.py` files are required to make Python treat the directories as a containing package.  
+`_init_.py` can just be an empty file, but it can also execute initialization code for the package or set the `__all__` variable.
+
+#### case 1
+
+``` python
+import sound.effects.echo
+```
+
+Load submodule, it must be referenced with its full name.
+
+``` python
+sound.effects.echo.echofilter(input, output, delay=0.7, atten=4)
+```
+
+#### case 2
+
+``` python
+from sound.effects import echo
+echo.echofilter(input, output, delay=0.7, atten=4)
+```
+
+#### case 3
+
+```python
+from sound.effects.echo import echofilter
+```
+
+_**Note:**_:  
+1. `from package import item`, the item can be either a submodule (or subpakcage) or the package, or some other name defined in the package, like function, class or variable. The `import` statement first tests whether the item is defined in the package; if not, it assumes it is a module and attempts to load it. If it fails to find it, an ImportError exception is raised.
+
+2. `import item.subitem.subsubitem`, each item except for the last must be a package; the last item can be a module or a package but can't be a class or function or variable defined in the previous item.
