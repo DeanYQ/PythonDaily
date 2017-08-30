@@ -206,3 +206,15 @@ _**Note:**_:
 1. `from package import item`, the item can be either a submodule (or subpakcage) or the package, or some other name defined in the package, like function, class or variable. The `import` statement first tests whether the item is defined in the package; if not, it assumes it is a module and attempts to load it. If it fails to find it, an ImportError exception is raised.
 
 2. `import item.subitem.subsubitem`, each item except for the last must be a package; the last item can be a module or a package but can't be a class or function or variable defined in the previous item.
+
+## Others
+
+* `__all__`:  
+if `__all__` is defined in the `__init__.py`, the `from package import *` will import the names listed in the `__all__`, otherwise the package will import whatever names defined in the package.
+
+* Intra-package:  
+Relative import. Note that relative imports are based on the name of the current module. Since the name of the main module is always `__main__`, modules intended for use as the main module of a Python application must always use absolute imports.
+
+* `__path__`:  
+Packages support one more special attribute, __path__. This is initialized to be a list containing the name of the directory holding the package’s __init__.py before the code in that file is executed. This variable can be modified; doing so affects future searches for modules and subpackages contained in the package.
+
