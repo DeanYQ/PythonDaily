@@ -96,3 +96,150 @@ This could also be done by passing the table as keyword arguments with the ‘**
 >>> print('Jack: {Jack:d}; Sjoerd: {Sjoerd:d}; Dcab: {Dcab:d}'.format(**table))
 Jack: 4098; Sjoerd: 4127; Dcab: 8637678
 ```
+
+## File
+
+* `open(filename, mode)`:  default mode is `'r'`
+
+**_mode_**:  
+`'r'` : file will only be read.  
+`'w'` : file only for writing (an existing file with the same name will be erased).  
+`'a'` : open the file for appending. Any data written to the file is automatically added to the end.  
+`'r+'`: open the file for both reading and writing.
+
+
+_**text_mode**_: If encoding is not specified, the default is platform dependent. `'b'` appended to the mode opens the file in _binary mode_.
+
+_**Ending:**_: the default when reading is to convert platform-specific line endings (`\n` on Unix, `\r\n` on Windows)  to just `\n`.
+
+* `with`:  
+use `with` keyword when dealing with file objects.
+
+```python
+>>> with open('workfile') as f:
+...     read_data = f.read()
+>>> f.closed
+True
+```
+
+* `f.close()`:  
+ close the file and immediately free up any system resources used by it. If a file object is closed. either by a `with` statement or by calling `f.close()`, attempt to use the file object will automatically fail.
+
+```python
+>>> f.close()
+>>> f.read()
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ValueError: I/O operation on closed file
+```
+
+* `f.read(size)`:  
+reads some quantity of data and returns it as a string (in text mode) or bytes object(in binary mode). _size_ is optional. When _size_ is omitted or negative, the entire contents of the file will be read and returned. If the end of file has been reached, `f.read()` will return an empoty string `('')`.
+
+```python
+>>> f.read()
+'This is the entire file.\n'
+>>> f.read()
+''
+```
+
+* `f.readline()`:  
+    * read a single line from the file;  
+    * if `f.readline()` return an empty string, the end of the file has been reached;  
+    * a blank line is represented by '\n', a string containing only a single newline.
+
+```python
+>>> f.readline()
+'This is the first line of the file.\n'
+>>> f.readline()
+'Second line of the file\n'
+>>> f.readline()
+''
+```
+
+**Loop over the file object to read lines from a file.**
+
+```python
+>>> for line in f:
+...     print(line, end='')
+...
+This is the first line of the file.
+Second line of the file
+```
+
+**read all lines**: `list(f)` or `f.readlings()`  
+
+* `f.write(string)`: writes the contents of `string` to the file, returning the number of characters written.
+
+```python
+>>> f.write('This is a test\n')
+15
+```
+
+Other types of objects need to be converted --either a string (in atext mode) or a bytes object (in binary mode) --before writing them.
+
+```python
+>>> value = ('the answer', 42)
+>>> s = str(value)  # convert the tuple to string
+>>> f.write(s)
+18
+```
+
+* `f.tell()`: return a integer giving  the file objects's current position in the file represented as number of bytes from the beginning of  the file when in binary mode and an opaque number when in text mode.
+
+* `f.seek(offseet, from_what)`: to change the file object's position.
+
+_from_what_ :  
+0 beginning of the file.  
+1 current file position  
+2 end of the file as the reference point. 
+
+If omitted and default is 0.
+
+```python
+>>> f = open('workfile', 'rb+')
+>>> f.write(b'0123456789abcdef')
+16
+>>> f.seek(5)      # Go to the 6th byte in the file
+5
+>>> f.read(1)
+b'5'
+>>> f.seek(-3, 2)  # Go to the 3rd byte before the end
+13
+>>> f.read(1)
+b'd'
+```
+
+## Json
+
+_ref: pickle_
+
+* `dumps()`
+* `dump()`
+* `load()`
+
+```python
+>>> import json
+>>> json.dumps([1, 'simple', 'list'])
+'[1, "simple", "list"]'
+```
+
+```python
+json.dump(x, f)
+```
+
+```python
+x = json.load(f)
+```
+
+
+
+
+
+
+
+
+
+
+
+
